@@ -1,0 +1,9 @@
+.popup__form {
+    display: flex;
+    flex-direction: column;
+}
+
+.popup__form:last-child {
+    justify-content: center;
+    align-items: center;
+}

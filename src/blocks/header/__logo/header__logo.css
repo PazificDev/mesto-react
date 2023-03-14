@@ -1,0 +1,28 @@
+.header__logo {
+    width: 142px;
+    height: 33px;
+    background-image: url(../../../images/logo.svg);
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+@media screen and (max-width: 1280px) {
+    .header__logo {
+        margin-left: calc((100vw - 880px) / (1280 - 880) * (0 - 27) + 27px);
+        width: calc((100vw - 320px) / (1280 - 320) * (142 - 103) + 103px);
+        height: calc((100vw - 320px) / (1280 - 320) * (33 - 24) + 24px);
+    }
+}
+
+@media screen and (max-width: 880px) {
+    .header__logo {
+        margin-left: 27px;
+    }
+}
+
+@media screen and (max-width: 320px) {
+    .header__logo {
+        width: 103px;
+        height: 24px;
+    }
+}

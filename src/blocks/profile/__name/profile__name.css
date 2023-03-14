@@ -1,0 +1,30 @@
+.profile__name {
+    color: #FFF;
+    font-weight: 500;
+    font-size: 42px;
+    line-height: 48px;
+    margin: 0 18px 0 0;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    max-width: 450px;
+    padding-bottom: 7px;
+}
+
+@media screen and (max-width: 1280px) {
+    .profile__name {
+            font-size: calc((100vw - 320px) / (1280 - 320) * (42 - 27) + 27px);
+            line-height: calc((100vw - 320px) / (1280 - 320) * (48 - 33) + 33px);
+            margin-right: calc((100vw - 320px) / (1280 - 320) * (18 - 10) + 10px);
+            max-width: calc((100vw - 320px) / (1280 - 320) * (450 - 220) + 220px);
+    }
+}
+
+@media screen and (max-width: 320px) {
+    .profile__name {
+        font-size: 27px;
+        line-height: 33px;
+        max-width: 240px;
+        margin: 0;
+    }
+}

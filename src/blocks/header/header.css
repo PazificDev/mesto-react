@@ -1,0 +1,22 @@
+.header {
+    padding-top: 45px;
+    min-height: 74px;
+    border-bottom: 1px solid rgba(84, 84, 84, 0.7);
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+@media screen and (max-width: 880px) {
+    .header {
+        padding-top: calc((100vw - 320px) / (880 - 320) * (45 - 28) + 28px);
+        min-height: calc((100vw - 320px) / (880 - 320) * (74 - 56) + 56px);
+    }
+}
+
+@media screen and (max-width: 320px) {
+    .header {
+        padding-top: 28px;
+        min-height: 56px;
+    }
+}

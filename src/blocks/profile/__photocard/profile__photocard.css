@@ -1,0 +1,4 @@
+.profile__photocard {
+    position: relative;
+    transition: opacity .3s ease;
+}

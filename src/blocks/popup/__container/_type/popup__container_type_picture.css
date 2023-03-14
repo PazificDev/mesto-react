@@ -1,0 +1,20 @@
+.popup__container_type_picture {
+    max-width: 816px;
+    max-height: 562px;
+    border-radius: 0;
+    background-color: transparent;
+}
+
+@media screen and (max-width: 880px) {
+    .popup__container_type_picture {
+            max-width: calc((100vw - 320px) / (880 - 320) * (816 - 240) + 240px);
+            max-height: calc((100vw - 320px) / (880 - 320) * (562 - 322) + 322px);
+    }
+}
+
+@media screen and (max-width: 320px) {
+    .popup__container_type_picture {
+        max-width: 240px;
+        max-height: 322px;
+    }
+}
