@@ -1,4 +1,4 @@
-import React from "react";
+import {useEffect, useState} from 'react';
 import "../index.css";
 import Header from "./Header";
 import Main from "./Main";
@@ -8,24 +8,22 @@ import ImagePopup from "./ImagePopup";
 import api from "../utils/Api";
 
 function App() {
-  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] =
-    React.useState(false);
-  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
-  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] =
-    React.useState(false);
-  const [userName, setUserName] = React.useState("");
-  const [userDescription, setUserDescription] = React.useState("");
-  const [userAvatar, setUserAvatar] = React.useState("");
-  const [cards, setCards] = React.useState([]);
-  const [selectedCard, setSelectedCard] = React.useState(null);
+  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
+  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
+  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
+  const [userName, setUserName] = useState("");
+  const [userDescription, setUserDescription] = useState("");
+  const [userAvatar, setUserAvatar] = useState("");
+  const [cards, setCards] = useState([]);
+  const [selectedCard, setSelectedCard] = useState(null);
 
-  React.useEffect(() => {
+  useEffect(() => {
     Promise.all([api.getUserData(), api.getInitialCards()])
-      .then((data) => {
-        setUserName(data[0].name);
-        setUserDescription(data[0].about);
-        setUserAvatar(data[0].avatar);
-        setCards(data[1]);
+      .then(([userData, cardsData]) => {
+        setUserName(userData.name);
+        setUserDescription(userData.about);
+        setUserAvatar(userData.avatar);
+        setCards(cardsData);
       })
       .catch((err) => {
         alert(err);
@@ -105,6 +103,7 @@ function App() {
       <PopupWithForm
         name="addPic"
         title="Новое место"
+        btnText="Создать"
         isOpen={isAddPlacePopupOpen}
         onClose={closeAllPopups}
       >
@@ -147,13 +146,10 @@ function App() {
         <span className="linkPhoto-error popup__error"></span>
       </PopupWithForm>
 
-      <PopupWithForm name="deleteCard" title="Вы уверены?" />
+      <PopupWithForm name="deleteCard" title="Вы уверены?" btnText="Да" />
 
-      {selectedCard ? (
-        <ImagePopup card={selectedCard} onClose={closeAllPopups} />
-      ) : (
-        ""
-      )}
+      <ImagePopup card={selectedCard} onClose={closeAllPopups} />
+
     </>
   );
 }
