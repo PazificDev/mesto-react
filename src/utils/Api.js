@@ -71,7 +71,7 @@ export class Api {
       method: "PATCH",
       headers: this._headers,
       body: JSON.stringify({
-        avatar: data.link,
+        avatar: data.avatar,
       }),
     })
       .then((res) => this._handleResponse(res))
@@ -80,30 +80,30 @@ export class Api {
       });
   }
 
-  putCardLike(id) {
-    return fetch(`${this._baseUrl}/cards/${id}/likes`, {
-      method: "PUT",
-      headers: {
-        authorization: `${this._headers.authorization}`,
-      },
-    })
-      .then((res) => this._handleResponse(res))
-      .then((data) => {
-        return data;
-      });
-  }
-
-  deleteCardLike(id) {
-    return fetch(`${this._baseUrl}/cards/${id}/likes`, {
-      method: "DELETE",
-      headers: {
-        authorization: `${this._headers.authorization}`,
-      },
-    })
-      .then((res) => this._handleResponse(res))
-      .then((data) => {
-        return data;
-      });
+  changeLikeCardStatus(id, isLiked) {
+    if (isLiked) {
+      return fetch(`${this._baseUrl}/cards/${id}/likes`, {
+        method: "PUT",
+        headers: {
+          authorization: `${this._headers.authorization}`,
+        },
+      })
+        .then((res) => this._handleResponse(res))
+        .then((data) => {
+          return data;
+        });
+    } else {
+      return fetch(`${this._baseUrl}/cards/${id}/likes`, {
+        method: "DELETE",
+        headers: {
+          authorization: `${this._headers.authorization}`,
+        },
+      })
+        .then((res) => this._handleResponse(res))
+        .then((data) => {
+          return data;
+        });
+    }
   }
 
   deleteCard(id) {
