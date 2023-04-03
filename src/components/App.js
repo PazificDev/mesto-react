@@ -19,6 +19,7 @@ function App() {
   const [cards, setCards] = useState([]);
   const [selectedCard, setSelectedCard] = useState(null);
   const [currentUser, setCurrentUser] = useState({}) 
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     Promise.all([api.getUserData(), api.getInitialCards()])
@@ -54,6 +55,23 @@ function App() {
     setIsAddPlacePopupOpen(false);
   }
 
+  const isOpen = isEditAvatarPopupOpen || isEditProfilePopupOpen || isAddPlacePopupOpen || selectedCard
+
+  useEffect(() => {
+    function closeByEscape(evt) {
+      if(evt.key === 'Escape') {
+        closeAllPopups();
+      }
+    }
+    if(isOpen) {
+      document.addEventListener('keydown', closeByEscape);
+      return () => {
+        document.removeEventListener('keydown', closeByEscape);
+      }
+    }
+  }, [isOpen]) 
+
+
   function handleCardLike(card) {
     const isLiked = card.likes.some(i => i._id === currentUser._id);
     api.changeLikeCardStatus(card._id, !isLiked)
@@ -76,6 +94,7 @@ function App() {
   }
 
   function handleUpdateUser(dataSet) {
+    setIsLoading(true);
     api.patchUserInfo(dataSet)
     .then((data) => {
       setCurrentUser({name: data.name, about: data.about, avatar: data.avatar})
@@ -85,13 +104,17 @@ function App() {
     })
     .catch((err) => {
       alert(err);
+    })
+    .finally(() => {
+      setIsLoading(false);
     }) 
   }
 
   function handleUpdateAvatar(dataSet) {
+    setIsLoading(true);
     api.patchUserPhoto(dataSet)
     .then((data) => {
-      setCurrentUser({name: data.name, about: data.about, avatar: data.avatar})
+      setCurrentUser(data)
     })
     .then(() => {
       closeAllPopups();
@@ -99,9 +122,13 @@ function App() {
     .catch((err) => {
       alert(err);
     }) 
+    .finally(() => {
+      setIsLoading(false);
+    }) 
   }
 
   function handleAddPlaceSubmit(dataSet) {
+    setIsLoading(true);
     api.postNewCard(dataSet)
     .then((data) => {
       setCards([data, ...cards]); 
@@ -111,7 +138,10 @@ function App() {
     })
     .catch((err) => {
       alert(err);
-    }) 
+    })
+    .finally(() => {
+      setIsLoading(false);
+    })  
   }
 
   return (
@@ -131,18 +161,21 @@ function App() {
       <Footer />
 
       <EditProfilePopup 
+        isLoading={isLoading}
         isOpen={isEditProfilePopupOpen} 
         onClose={closeAllPopups} 
         onUpdateUser={handleUpdateUser} 
       />
 
       <AddPlacePopup
+        isLoading={isLoading}
         isOpen={isAddPlacePopupOpen}
         onClose={closeAllPopups}
         onAddPlace={handleAddPlaceSubmit}
       />  
 
       <EditAvatarPopup 
+         isLoading={isLoading}
         isOpen={isEditAvatarPopupOpen} 
         onClose={closeAllPopups} 
         onUpdateAvatar={handleUpdateAvatar}

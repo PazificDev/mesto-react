@@ -18,10 +18,7 @@ export class Api {
         authorization: `${this._headers.authorization}`,
       },
     })
-      .then((res) => this._handleResponse(res))
-      .then((data) => {
-        return data;
-      });
+      .then((res) => this._handleResponse(res));
   }
 
   postNewCard(item) {

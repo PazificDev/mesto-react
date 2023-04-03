@@ -1,4 +1,5 @@
 function PopupWithForm(props) {
+  
   return (
     <section
       className={`popup popup_type_${props.name} ${
@@ -7,15 +8,15 @@ function PopupWithForm(props) {
     >
       <div className="popup__container">
         <h2 className="popup__title">{props.title}</h2>
-        <form name={props.name} onSubmit={props.onSubmit} className="popup__form" noValidate>
+        <form name={props.name} onSubmit={props.onSubmit} className="popup__form">
           <button
             type="button"
             className="popup__close"
             onClick={props.onClose}
-          ></button>
+          />
           {props.children}
           <button type="submit" className="popup__button">
-            {props.btnText ? props.btnText : "Сохранить"}
+            {props.isLoading ? "Сохранение.." : props.btnText ? props.btnText : "Сохранить"}
           </button>
         </form>
       </div>

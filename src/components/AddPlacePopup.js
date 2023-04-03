@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import PopupWithForm from "./PopupWithForm"
 
 function AddPlacePopup(props) {
@@ -19,10 +19,13 @@ function AddPlacePopup(props) {
     props.onAddPlace({
       name: name,
       link: link,
-    });
-
-    evt.target.reset();
+    });  
   }
+
+  useEffect(() => {
+    setName('');
+    setLink('');
+ }, [props.isOpen]);
 
   return (
     <PopupWithForm
@@ -32,11 +35,13 @@ function AddPlacePopup(props) {
         isOpen={props.isOpen}
         onClose={props.onClose}
         onSubmit={handleSubmit}
+        isLoading={props.isLoading}
       >
         <input
           type="text"
           id="picture"
           name="name"
+          value={name}
           onChange={handleNameChange}
           className="popup__input popup__input_edit_title"
           placeholder="Название"
@@ -49,6 +54,7 @@ function AddPlacePopup(props) {
           type="url"
           id="link"
           name="link"
+          value={link}
           onChange={handleLinkChange}
           className="popup__input popup__input_edit_pic"
           placeholder="Ссылка на картинку"
