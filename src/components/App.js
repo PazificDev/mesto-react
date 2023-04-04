@@ -97,7 +97,7 @@ function App() {
     setIsLoading(true);
     api.patchUserInfo(dataSet)
     .then((data) => {
-      setCurrentUser({name: data.name, about: data.about, avatar: data.avatar})
+      setCurrentUser(data)
     })
     .then(() => {
       closeAllPopups();
